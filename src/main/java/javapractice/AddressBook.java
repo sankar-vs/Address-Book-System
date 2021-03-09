@@ -9,7 +9,7 @@ public class AddressBook {
     public AddressBook() {
         contactList = new ArrayList<>();
     }
-
+    //To get input from user
     public String getInput(String detail) {
         Scanner sc = new Scanner(System.in);
         try {
@@ -19,13 +19,13 @@ public class AddressBook {
             return e.toString();
         }
     }
-
+    //Adds contacts to a list
     public void addContacts() {
         contactList.add(new Contact(getInput("FirstName"), getInput("LastName"), getInput("Address"),
                 getInput("City"), getInput("State"), getInput("Pin Code"),
                 getInput("Phone"), getInput("Email")));
     }
-
+    //Edits a contact
     public void editContacts() {
         if (checkEmpty()) return;
         boolean flag = true;
@@ -71,12 +71,12 @@ public class AddressBook {
         }
         if (flag) System.out.println("Name not present");
     }
-
+    //Displays the stored Contacts
     public void displayContacts() {
         if(checkEmpty()) return;
         contactList.forEach(System.out::println);
     }
-
+    //Deletes a Contact
     public void deleteContacts() {
         if (checkEmpty()) return;
         boolean flag = true;
@@ -91,7 +91,7 @@ public class AddressBook {
         }
         if (flag) System.out.println("Name not present");
     }
-
+    //Checks if the current list if empty or not
     public boolean checkEmpty() {
         if(contactList.isEmpty()) {
             System.out.println("Create a contact before you edit");

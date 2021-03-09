@@ -7,3 +7,5 @@
 #### Ability to edit existing contact person using their name
 ### Used Case:4
 #### Ability to delete existing contacts from address book
+### Used Case:5
+#### Ability to add multiple contacts to Address Book

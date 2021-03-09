@@ -3,7 +3,7 @@ package javapractice;
 import java.util.Scanner;
 
 public class AddressBookSystem {
-
+    //To employ different features in the book according to the input given by the user
     public static void startAddressBook() {
         Scanner sc = new Scanner(System.in);
         AddressBook book = new AddressBook();
