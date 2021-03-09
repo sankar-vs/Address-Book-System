@@ -22,7 +22,7 @@ public class Contact {
         this.email = email;
     }
     public String toString() {
-        return "\tFirst Name: "+firstName+"\n\tLast Name: "+lastName+"\n\tAddress: "+address+"\n\tCity: "+city+
+        return "\n\tFirst Name: "+firstName+"\n\tLast Name: "+lastName+"\n\tAddress: "+address+"\n\tCity: "+city+
                 "\n\tState: "+state+"\n\tZIP: "+zip+"\n\tPhone: "+phone+"\n\tEmail: "+email;
     }
 }
