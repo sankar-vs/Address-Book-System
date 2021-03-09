@@ -9,7 +9,8 @@ public class AddressBookSystem {
         AddressBook book = new AddressBook();
         boolean exit = true;
         while (exit) {
-            System.out.println("\t1. Add Contacts \n\t2. Display Contacts \n\t3. Edit Contacts \n\t4. Exit");
+            System.out.println("\t1. Add Contacts \n\t2. Display Contacts \n\t3. Edit Contacts " +
+                    "\n\t4. Delete Contacts \n\t5. Exit");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -22,6 +23,9 @@ public class AddressBookSystem {
                     book.editContacts();
                     break;
                 case 4:
+                    book.deleteContacts();
+                    break;
+                case 5:
                     exit = false;
                     break;
                 default:
