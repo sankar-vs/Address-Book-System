@@ -19,3 +19,5 @@
 #### Ability to view Persons by City or State
 ### Used Case:10
 #### Ability to get number of Contact persons i.e., count by city or state
+### Used Case:11
+#### Ability to sort the entries in the address book alphabetically by Person's name

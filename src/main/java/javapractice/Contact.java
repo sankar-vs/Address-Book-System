@@ -28,6 +28,7 @@ public class Contact {
                 "\n\tState: "+state+"\n\tZIP: "+zip+"\n\tPhone: "+phone+"\n\tEmail: "+email
                 + "\n-----------------------------------------------------------";
     }
+
     public String getFirstName() {
         return firstName;
     }

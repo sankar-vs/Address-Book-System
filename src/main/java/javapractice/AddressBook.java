@@ -1,9 +1,6 @@
 package javapractice;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBook {
     private ArrayList<Contact> contactList;
@@ -164,5 +161,9 @@ public class AddressBook {
             System.out.println("Name not present");
         else
             System.out.println("Total number count: " + count);
+    }
+
+    public void sortContact() {
+        contactList.stream().sorted(Comparator.comparing(Contact::getFirstName)).forEach(System.out::println);
     }
 }

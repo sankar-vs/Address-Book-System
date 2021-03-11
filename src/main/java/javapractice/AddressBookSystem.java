@@ -3,14 +3,15 @@ package javapractice;
 import java.util.Scanner;
 
 public class AddressBookSystem {
-    //To employ different features in the book according to the input given by the user
+    //To perform different features in the book according to the input given by the user
     public static void startAddressBook() {
         Scanner sc = new Scanner(System.in);
         AddressBook book = new AddressBook();
         boolean exit = true;
         while (exit) {
             System.out.println("\t1. Add Contacts \n\t2. Display Contacts \n\t3. Edit Contacts " +
-                    "\n\t4. Delete Contacts \n\t5. Search by City or State \n\t6. Exit");
+                    "\n\t4. Delete Contacts \n\t5. Search by City or State " +
+                    "\n\t6. Sort Contacts \n\t7. Exit");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -29,6 +30,9 @@ public class AddressBookSystem {
                     book.searchByCityOrState();
                     break;
                 case 6:
+                    book.sortContact();
+                    break;
+                case 7:
                     exit = false;
                     break;
                 default:
