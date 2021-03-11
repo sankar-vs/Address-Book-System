@@ -1,13 +1,17 @@
 package javapractice;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
     ArrayList<Contact> contactList;
+    Map<String, ArrayList<Contact>> bookMap;
 
     public AddressBook() {
         contactList = new ArrayList<>();
+        bookMap = new HashMap<>();
     }
     //To get input from user
     public String getInput(String detail) {
@@ -21,79 +25,111 @@ public class AddressBook {
     }
     //Adds contacts to a list
     public void addContacts() {
-        contactList.add(new Contact(getInput("FirstName"), getInput("LastName"), getInput("Address"),
+        Contact contact;
+        String bookName = getInput("BookName");
+        contact = new Contact(getInput("FirstName"), getInput("LastName"), getInput("Address"),
                 getInput("City"), getInput("State"), getInput("Pin Code"),
-                getInput("Phone"), getInput("Email")));
+                getInput("Phone"), getInput("Email"));
+        if (bookMap.containsKey(bookName)) {
+            ArrayList<Contact> contacts = bookMap.get(bookName);
+            contacts.add(contact);
+        }
+        else {
+            ArrayList<Contact> contacts = new ArrayList<>();
+            contacts.add(contact);
+            bookMap.put(bookName, contacts);
+        }
+        contactList.add(contact);
     }
+
     //Edits a contact
     public void editContacts() {
         if (checkEmpty()) return;
-        boolean flag = true;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Details to edit a contact");
-        String name = getInput("FirstName");
-        for(Contact contact : contactList) {
-            if(contact.getFirstName().equals(name)) {
-                flag = false;
-                System.out.println("\tPress the respective number you want to edit\n" +
-                        "\t1. First Name\n\t2. Last Name\n\t3. Address \n\t4. City\n\t5. State\n" +
-                        "\t6. Pin Code\n\t7. phone number\n\t8. email");
-                int choice = sc.nextInt();
-                switch(choice) {
-                    case 1:
-                        contact.setFirstName(getInput("FirstName"));
-                        break;
-                    case 2:
-                        contact.setLastName(getInput("LastName"));
-                        break;
-                    case 3:
-                        contact.setAddress(getInput("Address"));
-                        break;
-                    case 4:
-                        contact.setCity(getInput("City"));
-                        break;
-                    case 5:
-                        contact.setState(getInput("State"));
-                        break;
-                    case 6:
-                        contact.setZip(getInput("Pin Code"));
-                        break;
-                    case 7:
-                        contact.setPhone(getInput("Phone Number"));
-                        break;
-                    case 8:
-                        contact.setEmail(getInput("Email"));
-                    default:
-                        System.out.println("Invalid Choice");
-                        break;
+        String bookName = getInput("BookName");
+        if (bookMap.containsKey(bookName)){
+            ArrayList<Contact> contacts = bookMap.get(bookName);
+            boolean flag = true;
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter Details to edit a contact");
+            String name = getInput("FirstName");
+            for(Contact contact : contacts) {
+                if(contact.getFirstName().equals(name)) {
+                    flag = false;
+                    System.out.println("\tPress the respective number you want to edit\n" +
+                            "\t1. First Name\n\t2. Last Name\n\t3. Address \n\t4. City\n\t5. State\n" +
+                            "\t6. Pin Code\n\t7. phone number\n\t8. email");
+                    int choice = sc.nextInt();
+                    switch(choice) {
+                        case 1:
+                            contact.setFirstName(getInput("FirstName"));
+                            break;
+                        case 2:
+                            contact.setLastName(getInput("LastName"));
+                            break;
+                        case 3:
+                            contact.setAddress(getInput("Address"));
+                            break;
+                        case 4:
+                            contact.setCity(getInput("City"));
+                            break;
+                        case 5:
+                            contact.setState(getInput("State"));
+                            break;
+                        case 6:
+                            contact.setZip(getInput("Pin Code"));
+                            break;
+                        case 7:
+                            contact.setPhone(getInput("Phone Number"));
+                            break;
+                        case 8:
+                            contact.setEmail(getInput("Email"));
+                        default:
+                            System.out.println("Invalid Choice");
+                            break;
+                    }
                 }
             }
+            if (flag) System.out.println("Name not present");
         }
-        if (flag) System.out.println("Name not present");
+        else
+            System.out.println("Entered BookName not present");
     }
     //Displays the stored Contacts
     public void displayContacts() {
         if(checkEmpty()) return;
-        contactList.forEach(System.out::println);
+        bookMap.entrySet().stream().forEach(System.out::println);
+        String bookName = getInput("BookName");
+        if (bookMap.containsKey(bookName)){
+            ArrayList<Contact> contacts = bookMap.get(bookName);
+            contacts.forEach(System.out::println);
+        }
+        else
+            System.out.println("Entered BookName not present");
     }
     //Deletes a Contact
     public void deleteContacts() {
         if (checkEmpty()) return;
-        boolean flag = true;
-        System.out.println("Enter Details to delete a contact");
-        String name = getInput("FirstName");
-        for(Contact contact : contactList) {
-            if (contact.getFirstName().equals(name)) {
-                flag = false;
-                contactList.remove(contact);
-                break;
+        String bookName = getInput("BookName");
+        if (bookMap.containsKey(bookName)){
+            ArrayList<Contact> contacts = bookMap.get(bookName);
+            boolean flag = true;
+            System.out.println("Enter Details to delete a contact");
+            String name = getInput("FirstName");
+            for(Contact contact : contacts) {
+                if (contact.getFirstName().equals(name)) {
+                    flag = false;
+                    contactList.remove(contact);
+                    contacts.remove(contact);
+                    break;
+                }
             }
+            if (flag) System.out.println("Name not present");
         }
-        if (flag) System.out.println("Name not present");
+
     }
     //Checks if the current list if empty or not
     public boolean checkEmpty() {
-        if(contactList.isEmpty()) {
+        if(contactList.isEmpty() && bookMap.isEmpty()) {
             System.out.println("Create a contact before you edit");
             return true;
         }

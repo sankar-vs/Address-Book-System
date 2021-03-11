@@ -23,10 +23,11 @@ public class Contact {
     }
     @Override
     public String toString() {
-        return "\n\tFirst Name: "+firstName+"\n\tLast Name: "+lastName+"\n\tAddress: "+address+"\n\tCity: "+city+
-                "\n\tState: "+state+"\n\tZIP: "+zip+"\n\tPhone: "+phone+"\n\tEmail: "+email;
+        return "-----------------------------------------------------------" +
+                "\n\tFirst Name: "+firstName+"\n\tLast Name: "+lastName+"\n\tAddress: "+address+"\n\tCity: "+city+
+                "\n\tState: "+state+"\n\tZIP: "+zip+"\n\tPhone: "+phone+"\n\tEmail: "+email
+                + "\n-----------------------------------------------------------";
     }
-
     public String getFirstName() {
         return firstName;
     }
