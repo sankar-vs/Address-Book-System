@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
-    ArrayList<Contact> contactList;
-    Map<String, ArrayList<Contact>> bookMap;
+    private ArrayList<Contact> contactList;
+    private Map<String, ArrayList<Contact>> bookMap;
 
     public AddressBook() {
         contactList = new ArrayList<>();
@@ -150,16 +150,19 @@ public class AddressBook {
 
     public void searchByCityOrState() {
         if (checkEmpty()) return;
-            boolean flag = true;
+        int count = 0;
         System.out.println("Enter Details to search");
         String city = getInput("City");
         String state = getInput("state");
         for(Contact contact : contactList) {
             if (contact.getCity().equalsIgnoreCase(city) || contact.getState().equalsIgnoreCase(state)) {
-                flag = false;
+                count++;
                 System.out.println(contact);
             }
         }
-        if (flag) System.out.println("Name not present");
+        if (count == 0)
+            System.out.println("Name not present");
+        else
+            System.out.println("Total number count: " + count);
     }
 }

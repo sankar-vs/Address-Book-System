@@ -17,3 +17,5 @@
 #### Ability to Search Person in a City or State across multiple AddressBook
 ### Used Case:9
 #### Ability to view Persons by City or State
+### Used Case:10
+#### Ability to get number of Contact persons i.e., count by city or state
