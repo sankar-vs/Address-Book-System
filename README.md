@@ -15,3 +15,5 @@
 #### Check for duplicate Entries
 ### Used Case:8
 #### Ability to Search Person in a City or State across multiple AddressBook
+### Used Case:9
+#### Ability to view Persons by City or State
