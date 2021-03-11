@@ -41,6 +41,10 @@ public class Contact {
         return state;
     }
 
+    public String getZip() {
+        return zip;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

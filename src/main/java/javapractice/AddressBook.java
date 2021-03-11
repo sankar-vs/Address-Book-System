@@ -3,6 +3,7 @@ package javapractice;
 import java.util.*;
 
 public class AddressBook {
+    Scanner sc = new Scanner(System.in);
     private ArrayList<Contact> contactList;
     private Map<String, ArrayList<Contact>> bookMap;
 
@@ -12,7 +13,6 @@ public class AddressBook {
     }
     //To get input from user
     public String getInput(String detail) {
-        Scanner sc = new Scanner(System.in);
         try {
             System.out.println("Enter " + detail + ": ");
             return sc.next();
@@ -50,43 +50,47 @@ public class AddressBook {
         if (bookMap.containsKey(bookName)){
             ArrayList<Contact> contacts = bookMap.get(bookName);
             boolean flag = true;
-            Scanner sc = new Scanner(System.in);
             System.out.println("Enter Details to edit a contact");
             String name = getInput("FirstName");
             for(Contact contact : contacts) {
                 if(contact.getFirstName().equals(name)) {
                     flag = false;
-                    System.out.println("\tPress the respective number you want to edit\n" +
-                            "\t1. First Name\n\t2. Last Name\n\t3. Address \n\t4. City\n\t5. State\n" +
-                            "\t6. Pin Code\n\t7. phone number\n\t8. email");
-                    int choice = sc.nextInt();
-                    switch(choice) {
-                        case 1:
-                            contact.setFirstName(getInput("FirstName"));
-                            break;
-                        case 2:
-                            contact.setLastName(getInput("LastName"));
-                            break;
-                        case 3:
-                            contact.setAddress(getInput("Address"));
-                            break;
-                        case 4:
-                            contact.setCity(getInput("City"));
-                            break;
-                        case 5:
-                            contact.setState(getInput("State"));
-                            break;
-                        case 6:
-                            contact.setZip(getInput("Pin Code"));
-                            break;
-                        case 7:
-                            contact.setPhone(getInput("Phone Number"));
-                            break;
-                        case 8:
-                            contact.setEmail(getInput("Email"));
-                        default:
-                            System.out.println("Invalid Choice");
-                            break;
+                    try {
+                        System.out.println("\tPress the respective number you want to edit\n" +
+                                "\t1. First Name\n\t2. Last Name\n\t3. Address \n\t4. City\n\t5. State\n" +
+                                "\t6. Pin Code\n\t7. phone number\n\t8. email");
+                        int choice = sc.nextInt();
+                        switch(choice) {
+                            case 1:
+                                contact.setFirstName(getInput("FirstName"));
+                                break;
+                            case 2:
+                                contact.setLastName(getInput("LastName"));
+                                break;
+                            case 3:
+                                contact.setAddress(getInput("Address"));
+                                break;
+                            case 4:
+                                contact.setCity(getInput("City"));
+                                break;
+                            case 5:
+                                contact.setState(getInput("State"));
+                                break;
+                            case 6:
+                                contact.setZip(getInput("Pin Code"));
+                                break;
+                            case 7:
+                                contact.setPhone(getInput("Phone Number"));
+                                break;
+                            case 8:
+                                contact.setEmail(getInput("Email"));
+                            default:
+                                System.out.println("Invalid Choice");
+                                break;
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                        break;
                     }
                 }
             }
@@ -164,6 +168,28 @@ public class AddressBook {
     }
 
     public void sortContact() {
-        contactList.stream().sorted(Comparator.comparing(Contact::getFirstName)).forEach(System.out::println);
+        try {
+            System.out.println("\t1. Sort by FirstName \n\t2. Sort by City \n\t3. Edit Sort by State \n\t4. Sort by Pin Code");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    contactList.stream().sorted(Comparator.comparing(Contact::getFirstName)).forEach(System.out::println);
+                    break;
+                case 2:
+                    contactList.stream().sorted(Comparator.comparing(Contact::getCity)).forEach(System.out::println);
+                    break;
+                case 3:
+                    contactList.stream().sorted(Comparator.comparing(Contact::getState)).forEach(System.out::println);
+                    break;
+                case 4:
+                    contactList.stream().sorted(Comparator.comparing(Contact::getZip)).forEach(System.out::println);
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 }
