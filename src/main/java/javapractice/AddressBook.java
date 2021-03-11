@@ -101,7 +101,7 @@ public class AddressBook {
     //Displays the stored Contacts
     public void displayContacts() {
         if(checkEmpty()) return;
-        bookMap.keySet().stream().forEach(System.out::println);
+        bookMap.keySet().forEach(System.out::println);
         String bookName = getInput("BookName");
         if (bookMap.containsKey(bookName)){
             ArrayList<Contact> contacts = bookMap.get(bookName);
@@ -142,12 +142,25 @@ public class AddressBook {
     public boolean checkDuplicates(String firstName){
         int flag = 0;
         for (Contact contact : contactList) {
-            if (contact.getFirstName().toLowerCase().equals(firstName.toLowerCase()))
+            if (contact.getFirstName().equalsIgnoreCase(firstName))
                 flag++;
         }
-        if (flag > 0)
-            return true;
-        else
-            return false;
+        return flag > 0;
     }
+
+    public void searchByCityOrState() {
+        if (checkEmpty()) return;
+            boolean flag = true;
+        System.out.println("Enter Details to search");
+        String city = getInput("City");
+        String state = getInput("state");
+        for(Contact contact : contactList) {
+            if (contact.getCity().equalsIgnoreCase(city) || contact.getState().equalsIgnoreCase(state)) {
+                flag = false;
+                System.out.println(contact);
+            }
+        }
+        if (flag) System.out.println("Name not present");
+    }
+
 }

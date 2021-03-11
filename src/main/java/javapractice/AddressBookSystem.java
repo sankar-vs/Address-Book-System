@@ -10,7 +10,7 @@ public class AddressBookSystem {
         boolean exit = true;
         while (exit) {
             System.out.println("\t1. Add Contacts \n\t2. Display Contacts \n\t3. Edit Contacts " +
-                    "\n\t4. Delete Contacts \n\t5. Exit");
+                    "\n\t4. Delete Contacts \n\t5. Search by City or State \n\t6. Exit");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -26,6 +26,9 @@ public class AddressBookSystem {
                     book.deleteContacts();
                     break;
                 case 5:
+                    book.searchByCityOrState();
+                    break;
+                case 6:
                     exit = false;
                     break;
                 default:

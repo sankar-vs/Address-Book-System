@@ -13,3 +13,5 @@
 #### Refactor to ADD multiple address Book to the System
 ### Used Case:7
 #### Check for duplicate Entries
+### Used Case:8
+#### Ability to Search Person in a City or State across multiple AddressBook

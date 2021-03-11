@@ -32,6 +32,14 @@ public class Contact {
         return firstName;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
