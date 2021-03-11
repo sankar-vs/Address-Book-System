@@ -23,11 +23,16 @@ public class AddressBook {
             return e.toString();
         }
     }
-    //Adds contacts to a list
+    //Adds contacts to a list and stores into a map
     public void addContacts() {
         Contact contact;
         String bookName = getInput("BookName");
-        contact = new Contact(getInput("FirstName"), getInput("LastName"), getInput("Address"),
+        String firstName = getInput("FirstName");
+        if (checkDuplicates(firstName)) {
+            System.out.println("Name already exists");
+            return;
+        }
+        contact = new Contact(firstName, getInput("LastName"), getInput("Address"),
                 getInput("City"), getInput("State"), getInput("Pin Code"),
                 getInput("Phone"), getInput("Email"));
         if (bookMap.containsKey(bookName)) {
@@ -41,7 +46,6 @@ public class AddressBook {
         }
         contactList.add(contact);
     }
-
     //Edits a contact
     public void editContacts() {
         if (checkEmpty()) return;
@@ -97,7 +101,7 @@ public class AddressBook {
     //Displays the stored Contacts
     public void displayContacts() {
         if(checkEmpty()) return;
-        bookMap.entrySet().stream().forEach(System.out::println);
+        bookMap.keySet().stream().forEach(System.out::println);
         String bookName = getInput("BookName");
         if (bookMap.containsKey(bookName)){
             ArrayList<Contact> contacts = bookMap.get(bookName);
@@ -125,7 +129,6 @@ public class AddressBook {
             }
             if (flag) System.out.println("Name not present");
         }
-
     }
     //Checks if the current list if empty or not
     public boolean checkEmpty() {
@@ -134,5 +137,17 @@ public class AddressBook {
             return true;
         }
         return false;
+    }
+    //Check for duplicates
+    public boolean checkDuplicates(String firstName){
+        int flag = 0;
+        for (Contact contact : contactList) {
+            if (contact.getFirstName().toLowerCase().equals(firstName.toLowerCase()))
+                flag++;
+        }
+        if (flag > 0)
+            return true;
+        else
+            return false;
     }
 }

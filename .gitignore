@@ -8,5 +8,4 @@ gradlew.bat
 settings.gradle
 **/main/resources
 **/test/resources
-**/test/java
 src/test

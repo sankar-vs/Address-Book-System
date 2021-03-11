@@ -11,3 +11,5 @@
 #### Ability to add multiple contacts to Address Book
 ### Used Case:6
 #### Refactor to ADD multiple address Book to the System
+### Used Case:7
+#### Check for duplicate Entries
