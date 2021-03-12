@@ -23,10 +23,8 @@ public class Contact {
     }
     @Override
     public String toString() {
-        return "-----------------------------------------------------------" +
-                "\n\tFirst Name: "+firstName+"\n\tLast Name: "+lastName+"\n\tAddress: "+address+"\n\tCity: "+city+
-                "\n\tState: "+state+"\n\tZIP: "+zip+"\n\tPhone: "+phone+"\n\tEmail: "+email
-                + "\n-----------------------------------------------------------";
+        return  "First Name: "+firstName+", Last Name: "+lastName+", Address: "+address+", City: "+city+
+                ", State: "+state+", ZIP: "+zip+", Phone: "+phone+", Email: "+email;
     }
 
     public String getFirstName() {

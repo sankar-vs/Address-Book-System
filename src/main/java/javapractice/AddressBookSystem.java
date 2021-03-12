@@ -11,7 +11,8 @@ public class AddressBookSystem {
         while (exit) {
             try {
                 System.out.println("\t1. Add Contacts \n\t2. Display Contacts \n\t3. Edit Contacts " +
-                        "\n\t4. Delete Contacts \n\t5. Search by City or State \n\t6. Sort Contacts \n\t7. Exit");
+                        "\n\t4. Delete Contacts \n\t5. Search by City or State \n\t6. Sort Contacts " +
+                        "\n\t7. FileIO \n\t8. Exit");
                 int choice = sc.nextInt();
                 switch (choice) {
                     case 1:
@@ -33,6 +34,9 @@ public class AddressBookSystem {
                         book.sortContact();
                         break;
                     case 7:
+                        book.fileIO();
+                        break;
+                    case 8:
                         exit = false;
                         break;
                     default:

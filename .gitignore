@@ -9,3 +9,4 @@ settings.gradle
 **/main/resources
 **/test/resources
 src/test
+test

@@ -4,6 +4,7 @@ import java.util.*;
 
 public class AddressBook {
     Scanner sc = new Scanner(System.in);
+    public enum IOService {CONSOLE_IO, FILE_IO}
     private ArrayList<Contact> contactList;
     private Map<String, ArrayList<Contact>> bookMap;
 
@@ -183,6 +184,60 @@ public class AddressBook {
                     break;
                 case 4:
                     contactList.stream().sorted(Comparator.comparing(Contact::getZip)).forEach(System.out::println);
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public long readContactData(IOService ioService) {
+        if (ioService.equals(IOService.FILE_IO))
+            this.contactList = (ArrayList<Contact>) new AddressBookFileIO().readData();
+        return contactList.size();
+    }
+
+    public void writeContactData(IOService ioService) {
+        if(ioService.equals(IOService.CONSOLE_IO))
+            contactList.forEach(System.out::println);
+        else if (ioService.equals(IOService.FILE_IO))
+            new AddressBookFileIO().write(contactList);
+    }
+
+    public void printData(IOService ioService) {
+        if (ioService.equals(IOService.FILE_IO))
+            new AddressBookFileIO().printData();
+    }
+
+    public long countEntries(IOService ioService) {
+        if (ioService.equals(IOService.FILE_IO))
+            return new AddressBookFileIO().countEntries();
+        return 0;
+    }
+
+    public void fileIO() {
+        try {
+            System.out.println("\t1. WriteContactInConsole \n\t2. WriteContactInFile \n\t3. PrintData " +
+                    "\n\t4. Count entries \n\t5. Read entries") ;
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    writeContactData(IOService.CONSOLE_IO);
+                    break;
+                case 2:
+                    writeContactData(IOService.FILE_IO);
+                    break;
+                case 3:
+                    printData(IOService.FILE_IO);
+                    break;
+                case 4:
+                    System.out.println("Count: " + countEntries(IOService.FILE_IO));
+                    break;
+                case 5:
+                    System.out.println("Count: " + readContactData(IOService.FILE_IO));
                     break;
                 default:
                     System.out.println("Invalid choice");
