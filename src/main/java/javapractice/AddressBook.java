@@ -109,12 +109,8 @@ public class AddressBook {
             ArrayList<Contact> contacts = bookMap.get(bookName);
             contacts.forEach(System.out::println);
         }
-        else {
+        else
             System.out.println("Entered BookName not present");
-            if (!contactList.isEmpty()) {
-                contactList.forEach(System.out::println);
-            }
-        }
     }
     //Deletes a Contact
     public void deleteContacts() {
@@ -198,7 +194,7 @@ public class AddressBook {
             System.out.println(e.toString());
         }
     }
-
+    //Reads and Writes data from a Text File
     public void fileIO() {
         try {
             System.out.println("\t1. WriteContactInFile \n\t2. PrintData " +
@@ -216,6 +212,7 @@ public class AddressBook {
                     break;
                 case 4:
                     this.contactList = (ArrayList<Contact>) new AddressBookFileIO().readData();
+                    bookMap.put("File", contactList);
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -225,7 +222,7 @@ public class AddressBook {
             System.out.println(e.toString());
         }
     }
-
+    //Reads and Writes data from a CSV File
     public void openCSV() {
         try {
             System.out.println("\t1. Write to CSV \n\t2. Read from CSV ");
@@ -236,6 +233,7 @@ public class AddressBook {
                     break;
                 case 2:
                     this.contactList = (ArrayList<Contact>) new CSVReaderWriter().readCSV();
+                    bookMap.put("CSV", contactList);
                     break;
             }
         } catch (Exception e) {
