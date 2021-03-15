@@ -1,10 +1,10 @@
 package javapractice;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBook {
     Scanner sc = new Scanner(System.in);
-    public enum IOService {CONSOLE_IO, FILE_IO}
     private ArrayList<Contact> contactList;
     private Map<String, ArrayList<Contact>> bookMap;
 
@@ -23,14 +23,13 @@ public class AddressBook {
     }
     //Adds contacts to a list and stores into a map
     public void addContacts() {
-        Contact contact;
         String bookName = getInput("BookName");
         String firstName = getInput("FirstName");
         if (checkDuplicates(firstName)) {
             System.out.println("Name already exists");
             return;
         }
-        contact = new Contact(firstName, getInput("LastName"), getInput("Address"),
+        Contact contact = new Contact(firstName, getInput("LastName"), getInput("Address"),
                 getInput("City"), getInput("State"), getInput("Pin Code"),
                 getInput("Phone"), getInput("Email"));
         if (bookMap.containsKey(bookName)) {
@@ -129,12 +128,12 @@ public class AddressBook {
                     break;
                 }
             }
-            if (flag) System.out.println("Name not present");
+            if (flag) System.out.println("Entered FirstName not present");
         }
     }
     //Checks if the current list if empty or not
     public boolean checkEmpty() {
-        if(contactList.isEmpty() && bookMap.isEmpty()) {
+        if(contactList.isEmpty() | bookMap.isEmpty() | bookMap.values().isEmpty()) {
             System.out.println("Create a contact before you edit");
             return true;
         }
@@ -163,9 +162,8 @@ public class AddressBook {
             }
         }
         if (count == 0)
-            System.out.println("Name not present");
-        else
-            System.out.println("Total number count: " + count);
+            System.out.println("City or State not present");
+        System.out.println("Total number count: " + count);
     }
     //Sort the Contacts according to User's Choice
     public void sortContact() {
@@ -175,16 +173,16 @@ public class AddressBook {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    contactList.stream().sorted(Comparator.comparing(Contact::getFirstName)).forEach(System.out::println);
+                    bookMap.values().stream().flatMap(x -> x.stream().sorted(Comparator.comparing(Contact::getFirstName))).forEach(System.out::println);
                     break;
                 case 2:
-                    contactList.stream().sorted(Comparator.comparing(Contact::getCity)).forEach(System.out::println);
+                    bookMap.values().stream().flatMap(x -> x.stream().sorted(Comparator.comparing(Contact::getCity))).forEach(System.out::println);
                     break;
                 case 3:
-                    contactList.stream().sorted(Comparator.comparing(Contact::getState)).forEach(System.out::println);
+                    bookMap.values().stream().flatMap(x -> x.stream().sorted(Comparator.comparing(Contact::getState))).forEach(System.out::println);
                     break;
                 case 4:
-                    contactList.stream().sorted(Comparator.comparing(Contact::getZip)).forEach(System.out::println);
+                    bookMap.values().stream().flatMap(x -> x.stream().sorted(Comparator.comparing(Contact::getZip))).forEach(System.out::println);
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -194,15 +192,14 @@ public class AddressBook {
             System.out.println(e.toString());
         }
     }
-    //Reads and Writes data from a Text File
+    //Reads and Writes data from a Text File and performs operations chosen by the User
     public void fileIO() {
         try {
-            System.out.println("\t1. WriteContactInFile \n\t2. PrintData " +
-                    "\n\t3. Count entries \n\t4. Read entries") ;
+            System.out.println("\t1. WriteContactInFile \n\t2. PrintData \n\t3. Count entries \n\t4. Read entries") ;
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    new AddressBookFileIO().write(contactList);
+                    new AddressBookFileIO().write(bookMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList()));
                     break;
                 case 2:
                     new AddressBookFileIO().printData();
@@ -229,7 +226,7 @@ public class AddressBook {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    new CSVReaderWriter().writeCSV(contactList);
+                    new CSVReaderWriter().writeCSV(bookMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList()));
                     break;
                 case 2:
                     this.contactList = (ArrayList<Contact>) new CSVReaderWriter().readCSV();
@@ -241,4 +238,7 @@ public class AddressBook {
         }
     }
 
+    public void openJSON() {
+        new JSONReaderWriter().writeJSON();
+    }
 }

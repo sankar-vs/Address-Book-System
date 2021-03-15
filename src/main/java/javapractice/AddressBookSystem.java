@@ -7,12 +7,11 @@ public class AddressBookSystem {
     public static void startAddressBook() {
         Scanner sc = new Scanner(System.in);
         AddressBook book = new AddressBook();
-        boolean exit = true;
-        while (exit) {
+        while (true) {
             try {
                 System.out.println("\t1. Add Contacts \n\t2. Display Contacts \n\t3. Edit Contacts " +
                         "\n\t4. Delete Contacts \n\t5. Search by City or State \n\t6. Sort Contacts " +
-                        "\n\t7. FileIO \n\t8. OpenCSV \n\t9. Exit");
+                        "\n\t7. FileIO \n\t8. OpenCSV \n\t9. JSON\n\t10. Exit");
                 int choice = sc.nextInt();
                 switch (choice) {
                     case 1:
@@ -40,7 +39,10 @@ public class AddressBookSystem {
                         book.openCSV();
                         break;
                     case 9:
-                        exit = false;
+                        book.openJSON();
+                        break;
+                    case 10:
+                        System.exit(0);
                         break;
                     default:
                         System.out.println("Invalid Choice");

@@ -27,12 +27,10 @@ public class CSVReaderWriter {
                 .withType(Contact.class)
                 .withIgnoreLeadingWhiteSpace(true)
                 .build();
-
             for (Contact csvUser : csvToBean) {
                 Contact contact = new Contact(csvUser.getFirstName(), csvUser.getLastName(), csvUser.getAddress(),
                         csvUser.getCity(), csvUser.getState(), csvUser.getZip(), csvUser.getPhoneNumber(), csvUser.getEmail());
                 contactList.add(contact);
-                System.out.println(csvUser);
             }
         }
         return contactList;
@@ -40,7 +38,7 @@ public class CSVReaderWriter {
 
     public static final String OBJECT_LIST = "src/main/resources/write_csv.csv";
 
-    public void writeCSV(ArrayList<Contact> contactList) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+    public void writeCSV(List<Contact> contactList) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
         try (Writer writer = Files.newBufferedWriter(Paths.get(OBJECT_LIST));
         ){
             StatefulBeanToCsv<Contact>beanToCsv = new StatefulBeanToCsvBuilder(writer)

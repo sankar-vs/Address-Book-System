@@ -1,1 +1,5 @@
-First Name: sankar, Last Name: asdf, Address: adsf, City: adsf, State: asdf, ZIP: adsf, Phone: asdf, Email: asdf
+First Name: Bill, Last Name: Anderson, Address: Marley Street, City: Perth, State: WA, ZIP: 789456, Phone: 7894561230, Email: abc@gmail.com
+First Name: Terisa, Last Name: Jones, Address: Queens Street, City: Sydney, State: NSW, ZIP: 456123, Phone: 1234567890, Email: abc100@gmail.com
+First Name: Charlie, Last Name: Chapline, Address: Roma Street, City: Brisbane, State: QSL, ZIP: 123456, Phone: 4561237890, Email: abc.100@gmail.com
+First Name: Ana, Last Name: Beggins, Address: Medelin Street, City: Sydney, State: NSW, ZIP: 456123, Phone: 4123456789, Email: abc200@gmail.com
+First Name: Tom, Last Name: Holland, Address: Fortitude Valley, City: Brisbane, State: QSL, ZIP: 123456, Phone: 4152856789, Email: abc300@gmail.com
