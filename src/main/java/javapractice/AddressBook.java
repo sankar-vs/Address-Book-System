@@ -266,4 +266,12 @@ public class AddressBook {
             System.out.println(e.toString());
         }
     }
+    //Reads and Writes data from a DATABASE
+    public void databaseConnectivity() {
+        bookMap.put("DB", (ArrayList<Contact>) new JDBC().readData());
+    }
+    //Returns size of the bookMap given a particular bookMap name
+    public int getBookMapSizeOfValues(String bookName) {
+        return bookMap.get(bookName).size();
+    }
 }

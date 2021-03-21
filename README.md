@@ -29,3 +29,5 @@
 #### Ability to Read/Write the Address Book with Persons Contact as CSV File
 ### Used Case:15
 #### Ability to Read/Write the Address Book with Persons Contact as JSONFile
+### Use Case:16
+#### Ability for the AddressBook Service to retrieve all the Entries from the DB

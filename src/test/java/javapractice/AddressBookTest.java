@@ -50,4 +50,12 @@ public class AddressBookTest {
         List<Contact> list = json.readJSON();
         Assertions.assertEquals(list, bookList);
     }
+
+    @Test
+    public void givenContactsInDB_WhenRetrieved_ShouldMatchEmployeeCount() {
+        AddressBook addressBook = new AddressBook();
+        addressBook.databaseConnectivity();
+        Assertions.assertEquals(4, addressBook.getBookMapSizeOfValues("DB"));
+    }
+
 }
