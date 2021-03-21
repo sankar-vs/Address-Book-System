@@ -4,8 +4,5 @@ build
 gradle
 build.gradle
 gradlew
-gradlew.bat
+gradlew.batw
 settings.gradle
-**/test/resources
-src/test
-test

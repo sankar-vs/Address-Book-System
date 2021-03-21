@@ -1,39 +1,46 @@
 package javapractice;
 
 import com.google.gson.Gson;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JSONReaderWriter {
-    private static final String CSV_FILE_PATH = "src/main/resources/AddressBook.csv";
-    private static final String JSON_FILE_PATH = "src/main/resources/Book.json";
+    private static String JSON_FILE_PATH = "src/main/resources/Book.json";
 
+    public JSONReaderWriter() {
+    }
 
-    public void writeJSON() {
+    public JSONReaderWriter(String path) {
+        JSON_FILE_PATH = path;
+    }
+
+    public void writeJSON(ArrayList<Contact> contacts) {
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH));
-            CsvToBeanBuilder<Contact> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-            csvToBeanBuilder.withType(Contact   .class);
-            csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-            CsvToBean<Contact> csvToBean = csvToBeanBuilder.build();
-            List<Contact> csvUsers =  csvToBean.parse();
-
             Gson gson = new Gson();
-            String json = gson.toJson(csvUsers);
+            String json = gson.toJson(contacts);
             FileWriter writer = new FileWriter(JSON_FILE_PATH);
             writer.write(json);
             writer.close();
-            BufferedReader br = new BufferedReader(new FileReader(JSON_FILE_PATH));
-            Contact[] usrObj = gson.fromJson(br,Contact[].class);
-            List<Contact> csvUserList = Arrays.asList(usrObj);
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public List<Contact> readJSON() {
+        Type REVIEW_TYPE = new TypeToken<List<Contact>>() {}.getType();
+        List<Contact> contactList = new ArrayList<>();
+        try {
+            Gson gson = new Gson();
+            BufferedReader reader = new BufferedReader(new FileReader(JSON_FILE_PATH));
+            contactList = gson.fromJson(reader, REVIEW_TYPE);
+            contactList.forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contactList;
     }
 }

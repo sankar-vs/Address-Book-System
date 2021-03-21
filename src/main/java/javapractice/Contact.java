@@ -2,6 +2,8 @@ package javapractice;
 
 import com.opencsv.bean.CsvBindByName;
 
+import java.util.Objects;
+
 public class Contact {
 
     @CsvBindByName(column = "firstName", required = true)
@@ -37,8 +39,8 @@ public class Contact {
 
     @Override
     public String toString() {
-        return  "First Name: "+firstName+", Last Name: "+lastName+", Address: "+address+", City: "+city+
-                ", State: "+state+", ZIP: "+zip+", Phone: "+phoneNumber+", Email: "+email;
+        return  "First Name:"+firstName+", Last Name:"+lastName+", Address:"+address+", City:"+city+
+                ", State:"+state+", ZIP:"+zip+", Phone:"+phoneNumber+", Email:"+email;
     }
 
     public String getFirstName() {
@@ -104,4 +106,13 @@ public class Contact {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return Objects.equals(firstName, contact.firstName) && Objects.equals(lastName, contact.lastName) && Objects.equals(address, contact.address) && Objects.equals(city, contact.city) && Objects.equals(state, contact.state) && Objects.equals(zip, contact.zip) && Objects.equals(phoneNumber, contact.phoneNumber) && Objects.equals(email, contact.email);
+    }
+
 }
