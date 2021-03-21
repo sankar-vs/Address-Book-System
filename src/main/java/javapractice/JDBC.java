@@ -23,7 +23,28 @@ public class JDBC {
         try (Connection connection = this.getConnection()){
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()){
+            contactList = getAddressBookData(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contactList;
+    }
+
+    public int updateData(String type, String name, String value) {
+        String sql = String.format("UPDATE contacts SET %s = '%s' WHERE firstName = '%s';",type,value,name);
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private List<Contact> getAddressBookData(ResultSet resultSet) {
+        List<Contact> contactList = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
                 String firstName = resultSet.getString("firstName");
                 String lastName = resultSet.getString("lastName");
                 String address = resultSet.getString("address");
@@ -39,5 +60,4 @@ public class JDBC {
         }
         return contactList;
     }
-
 }

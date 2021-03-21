@@ -270,8 +270,14 @@ public class AddressBook {
     public void databaseConnectivity() {
         bookMap.put("DB", (ArrayList<Contact>) new JDBC().readData());
     }
-    //Returns size of the bookMap given a particular bookMap name
-    public int getBookMapSizeOfValues(String bookName) {
-        return bookMap.get(bookName).size();
+    //Reads and Writes data from a DATABASE
+    public void updateDatabase(String type, String name, String value) {
+        if (new JDBC().updateData(type, name, value) == 1) {
+            bookMap.put("DB", (ArrayList<Contact>) new JDBC().readData());
+        }
+    }
+    //Returns List<Contact> of the bookMap given a particular bookMap name
+    public List<Contact> getBookMapSizeOfValues(String bookName) {
+        return bookMap.get(bookName);
     }
 }

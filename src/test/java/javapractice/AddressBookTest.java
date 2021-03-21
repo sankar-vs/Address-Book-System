@@ -55,7 +55,14 @@ public class AddressBookTest {
     public void givenContactsInDB_WhenRetrieved_ShouldMatchEmployeeCount() {
         AddressBook addressBook = new AddressBook();
         addressBook.databaseConnectivity();
-        Assertions.assertEquals(4, addressBook.getBookMapSizeOfValues("DB"));
+        Assertions.assertEquals(4, addressBook.getBookMapSizeOfValues("DB").size());
     }
 
+    @Test
+    public void givenNewStateForContactWithFirstName_whenUpdated_shouldSyncWithDB() {
+        AddressBook addressBook = new AddressBook();
+        addressBook.updateDatabase("city", "Ana", "Blr");
+        Contact contact = addressBook.getBookMapSizeOfValues("DB").stream().filter(e -> e.getCity().equals("Blr")).findFirst().orElse(null);
+        Assertions.assertEquals("Blr", contact.getCity());
+    }
 }
