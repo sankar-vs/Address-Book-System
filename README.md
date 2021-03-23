@@ -35,3 +35,5 @@
 #### Ability to update the Contact Information in the address book for a person and ensure that the Contact Information in the memory is in Sync with the DB
 ### Use Case:18
 #### Ability to Retrieve Contacts from the Database that were added in a particular period
+### Use Case:19
+#### Ability to Retrieve number of Contacts in the Database by City or State

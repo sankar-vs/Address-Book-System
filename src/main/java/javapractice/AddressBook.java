@@ -284,4 +284,8 @@ public class AddressBook {
     public List<Contact> readDateRangeDBAddressBook(String startDate, String endDate) {
         return new JDBC().getFilteredDateRangeResult(startDate, endDate);
     }
+
+    public List<Contact> filterDBAddressBookBYCityOrState(String city, String state) {
+        return new JDBC().getFilterByCityOrStateResult(city, state);
+    }
 }

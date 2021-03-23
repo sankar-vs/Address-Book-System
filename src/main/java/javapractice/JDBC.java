@@ -73,4 +73,17 @@ public class JDBC {
         }
         return filteredList;
     }
+
+    public List<Contact> getFilterByCityOrStateResult(String city, String state) {
+        String sql = String.format("SELECT * FROM addressbook_service.contacts WHERE city = '%s' OR state = '%s';", city, state);
+        List<Contact> filteredList = new ArrayList<>();
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            filteredList = this.getAddressBookData(resultSet);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return filteredList;
+    }
 }
