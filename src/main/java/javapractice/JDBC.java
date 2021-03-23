@@ -1,6 +1,7 @@
 package javapractice;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class JDBC {
     }
 
     public List<Contact> getFilterByCityOrStateResult(String city, String state) {
-        String sql = String.format("SELECT * FROM addressbook_service.contacts WHERE city = '%s' OR state = '%s';", city, state);
+        String sql = String.format("SELECT * FROM contacts WHERE city = '%s' OR state = '%s';", city, state);
         List<Contact> filteredList = new ArrayList<>();
         try (Connection connection = this.getConnection()){
             Statement statement = connection.createStatement();
@@ -85,5 +86,33 @@ public class JDBC {
             throwables.printStackTrace();
         }
         return filteredList;
+    }
+
+    public List<Contact> getDBfirstName(String name) {
+        String sql = String.format("SELECT * FROM contacts WHERE firstName = '%s';", name);
+        List<Contact> contactList = new ArrayList<>();
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            contactList = this.getAddressBookData(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contactList;
+    }
+
+    public Contact addContact(String firstName, String lastName, String address, String city, String state, String zip, String phone, String email, LocalDate date) {
+        String sql = String.format("INSERT INTO contacts (firstName, lastName, address, city, state, zip, phone, email, date) value \n" +
+                "('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');", firstName, lastName, address, city, state, zip, phone, email, date);
+        Contact contact = null;
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            int rowAffected = statement.executeUpdate(sql);
+            if (rowAffected == 1)
+                contact = new Contact(firstName, lastName, address, city, state, zip, phone, email, date);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contact;
     }
 }

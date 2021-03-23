@@ -1,5 +1,6 @@
 package javapractice;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -273,7 +274,7 @@ public class AddressBook {
     //Reads and Writes data from a DATABASE
     public void updateDatabase(String type, String name, String value) {
         if (new JDBC().updateData(type, name, value) == 1) {
-            bookMap.put("DB", (ArrayList<Contact>) new JDBC().readData());
+            databaseConnectivity();
         }
     }
     //Returns List<Contact> of the bookMap given a particular bookMap name
@@ -287,5 +288,23 @@ public class AddressBook {
 
     public List<Contact> filterDBAddressBookBYCityOrState(String city, String state) {
         return new JDBC().getFilterByCityOrStateResult(city, state);
+    }
+
+    public boolean checkSyncWithDB(String name) {
+        List<Contact> contactList = new JDBC().getDBfirstName(name);
+        return contactList.get(0).equals(getContact(name));
+    }
+
+    private Contact getContact(String name) {
+        return this.bookMap.values().stream().flatMap(Collection::stream)
+                .filter(e -> e.getFirstName().equalsIgnoreCase(name))
+                .findFirst().orElse(null);
+    }
+
+    public void addcontactToDB(String firstName, String lastName, String address, String city, String state, String zip, String phone, String email, LocalDate date) {
+        databaseConnectivity();
+        ArrayList<Contact> contactList = bookMap.get("DB");
+        contactList.add(new JDBC().addContact(firstName, lastName, address, city, state, zip, phone, email, date));
+        bookMap.put("DB", contactList);
     }
 }

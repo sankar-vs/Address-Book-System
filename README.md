@@ -37,3 +37,5 @@
 #### Ability to Retrieve Contacts from the Database that were added in a particular period
 ### Use Case:19
 #### Ability to Retrieve number of Contacts in the Database by City or State
+### Use Case:20
+#### Ability to Add new Contact to the Address Book Database

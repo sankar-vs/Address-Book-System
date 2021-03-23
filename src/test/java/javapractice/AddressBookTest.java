@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,5 +80,14 @@ public class AddressBookTest {
         AddressBook addressBook = new AddressBook();
         List<Contact> filteredResult = addressBook.filterDBAddressBookBYCityOrState("Brisbane", "NSW");
         Assertions.assertEquals(3, filteredResult.size());
+    }
+
+    @Test
+    void givenNewContactToDB_whenAdded_shouldSyncWithDB () throws SQLException {
+        AddressBook addressBook = new AddressBook();
+        addressBook.addcontactToDB("Sachin","Tendulkar","Appartments",
+                "Mumbai","MH","123456","1234567890","test1.100@gmail.com", LocalDate.now());
+        boolean result = addressBook.checkSyncWithDB("Sachin");
+        Assertions.assertTrue(result);
     }
 }
