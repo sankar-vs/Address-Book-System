@@ -31,3 +31,7 @@
 #### Ability to Read/Write the Address Book with Persons Contact as JSONFile
 ### Use Case:16
 #### Ability for the AddressBook Service to retrieve all the Entries from the DB
+### Use Case:17
+#### Ability to update the Contact Information in the address book for a person and ensure that the Contact Information in the memory is in Sync with the DB
+### Use Case:18
+#### Ability to Retrieve Contacts from the Database that were added in a particular period

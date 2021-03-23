@@ -280,4 +280,8 @@ public class AddressBook {
     public List<Contact> getBookMapSizeOfValues(String bookName) {
         return bookMap.get(bookName);
     }
+
+    public List<Contact> readDateRangeDBAddressBook(String startDate, String endDate) {
+        return new JDBC().getFilteredDateRangeResult(startDate, endDate);
+    }
 }

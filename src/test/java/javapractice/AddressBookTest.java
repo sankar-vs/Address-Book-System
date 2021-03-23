@@ -65,4 +65,11 @@ public class AddressBookTest {
         Contact contact = addressBook.getBookMapSizeOfValues("DB").stream().filter(e -> e.getCity().equals("Blr")).findFirst().orElse(null);
         Assertions.assertEquals("Blr", contact.getCity());
     }
+
+    @Test
+    void givenDateRangeToAddressBookInDB_WhenRetrieved_ShouldMatchFilteredContactsCount() {
+        AddressBook addressBook = new AddressBook();
+        List<Contact> filteredResult = addressBook.readDateRangeDBAddressBook("2018-01-01", "2020-12-22");
+        Assertions.assertEquals(3, filteredResult.size());
+    }
 }

@@ -2,6 +2,7 @@ package javapractice;
 
 import com.opencsv.bean.CsvBindByName;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Contact {
@@ -22,8 +23,15 @@ public class Contact {
     private String phoneNumber;
     @CsvBindByName(column = "email")
     private String email;
+    private LocalDate date;
 
     public Contact() {}
+
+    public Contact(String firstName, String lastName, String address, String city,
+                   String state, String zip, String phone, String email, LocalDate date) {
+        this(firstName, lastName, address, city, state, zip, phone, email);
+        this.date = date;
+    }
 
     public Contact(String firstName, String lastName, String address, String city,
                              String state, String zip, String phone, String email) {

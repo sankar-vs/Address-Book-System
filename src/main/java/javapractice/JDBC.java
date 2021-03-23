@@ -60,4 +60,17 @@ public class JDBC {
         }
         return contactList;
     }
+
+    public List<Contact> getFilteredDateRangeResult(String startDate, String endDate) {
+        String sql = String.format("SELECT * FROM contacts WHERE date BETWEEN '%s' AND '%s';", startDate, endDate);
+        List<Contact> filteredList = new ArrayList<>();
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            filteredList = this.getAddressBookData(resultSet);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return filteredList;
+    }
 }
