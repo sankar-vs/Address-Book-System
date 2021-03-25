@@ -47,3 +47,5 @@
 #### Ability to Add Multiple Entries to Address Book JSONServer and sync with Address Book Application Memory - Use RESTAssured
 ### Use Case:24
 #### Ability to Update Entry in Address Book JSONServer and sync with Address Book Application Memory
+### Use Case:25
+#### Ability to Delete Entry in Address Book JSONServer and sync with Address Book Application Memory - Use RESTAssured

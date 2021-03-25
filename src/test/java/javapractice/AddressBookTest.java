@@ -192,4 +192,19 @@ public class AddressBookTest {
         int statusCode = response.getStatusCode();
         Assertions.assertEquals(200,statusCode);
     }
+
+    @Test
+    void givenContactToDelete_whenDelete_ShouldMatch200Response() {
+        AddressBook book = new AddressBook(getContactList());
+
+        Contact contact = book.getContact("Sharon");
+        RequestSpecification requestSpecification = RestAssured.given();
+        requestSpecification.header("Content-Type","application/json");
+        Response response = requestSpecification.delete("/Contacts/"+7);
+        int statusCode = response.getStatusCode();
+        Assertions.assertEquals(200,statusCode);
+
+        book.deleteContactFromJSONServer(contact.getFirstName());
+        Assertions.assertEquals(5, book.getBookMapSizeOfValues("API").size());
+    }
 }

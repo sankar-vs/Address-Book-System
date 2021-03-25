@@ -351,4 +351,11 @@ public class AddressBook {
         Contact contact = this.getContact(firstName);
         if (contact != null) contact.setCity(city);
     }
+
+    public void deleteContactFromJSONServer(String firstName) {
+        Contact contact = getContact(firstName);
+        ArrayList<Contact> contactArrayList = bookMap.get("API");
+        contactArrayList.remove(contact);
+        bookMap.put("API", contactArrayList);
+    }
 }
