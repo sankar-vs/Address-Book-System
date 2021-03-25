@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,14 @@ public class AddressBookTest {
         Map<String, ArrayList<Contact>> bookAPI = new HashMap<>();
         bookAPI.put("API", (ArrayList<Contact>) listOfContacts);
         return bookAPI;
+    }
+
+    public Response addContactToJsonServer(Contact contact) {
+        String empJson = new Gson().toJson(contact);
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        request.body(empJson);
+        return request.post("/Contacts");
     }
 
     @Test
@@ -148,5 +157,24 @@ public class AddressBookTest {
     public void givenContactsInJSONServer_WhenRetrieved_ShouldMatchTheCount() {
         AddressBook book = new AddressBook(getContactList());
         Assertions.assertEquals(5, book.getBookMapSizeOfValues("API").size());
+    }
+
+    @Test
+    void givenListOfNewContact_whenAdded_shouldMatch201Response() {
+        AddressBook book = new AddressBook(getContactList());
+        Contact[] contacts = {
+                new Contact(0,"Sachin", "Tendulkar", "Appartments",
+                        "Mumbai", "MH", "123456", "1234567890", "test1.100@gmail.com", LocalDate.now()),
+                new Contact(0,"Sharon", "John", "Samrudhi Appartments",
+                        "Coimbatore", "TN", "560038", "7894561230", "test2.100@gmail.com", LocalDate.now())
+        };
+        for (Contact contact : contacts){
+            Response response = addContactToJsonServer(contact);
+            int statusCode = response.getStatusCode();
+            Assertions.assertEquals(201,statusCode);
+            Contact obj = new Gson().fromJson(response.asString(), Contact.class);
+            book.addContactToJSONServer(obj);
+        }
+        Assertions.assertEquals(7, book.getBookMapSizeOfValues("API").size());
     }
 }

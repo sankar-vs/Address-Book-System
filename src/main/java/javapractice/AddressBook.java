@@ -340,4 +340,10 @@ public class AddressBook {
                     x.getZip(), x.getPhoneNumber(), x.getEmail(), x.getDate());
         }
     }
+
+    public void addContactToJSONServer(Contact contact) {
+        ArrayList<Contact> contactArrayList = bookMap.get("API");
+        contactArrayList.add(contact);
+        bookMap.put("API", contactArrayList);
+    }
 }

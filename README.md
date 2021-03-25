@@ -43,3 +43,5 @@
 #### Ability to Add Multiple Contacts to the Address Book Database
 ### Use Case:22
 #### Ability to Read Entries of Address Book from JSONServer
+### Use Case:23
+#### Ability to Add Multiple Entries to Address Book JSONServer and sync with Address Book Application Memory - Use RESTAssured
