@@ -45,3 +45,5 @@
 #### Ability to Read Entries of Address Book from JSONServer
 ### Use Case:23
 #### Ability to Add Multiple Entries to Address Book JSONServer and sync with Address Book Application Memory - Use RESTAssured
+### Use Case:24
+#### Ability to Update Entry in Address Book JSONServer and sync with Address Book Application Memory

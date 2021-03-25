@@ -297,7 +297,7 @@ public class AddressBook {
         return contactList.get(0).equals(getContact(name));
     }
 
-    private Contact getContact(String name) {
+    public Contact getContact(String name) {
         return this.bookMap.values().stream().flatMap(Collection::stream)
                 .filter(e -> e.getFirstName().equalsIgnoreCase(name))
                 .findFirst().orElse(null);
@@ -345,5 +345,10 @@ public class AddressBook {
         ArrayList<Contact> contactArrayList = bookMap.get("API");
         contactArrayList.add(contact);
         bookMap.put("API", contactArrayList);
+    }
+
+    public void updateContactJSONServer(String firstName, String city) {
+        Contact contact = this.getContact(firstName);
+        if (contact != null) contact.setCity(city);
     }
 }

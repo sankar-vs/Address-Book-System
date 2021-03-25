@@ -177,4 +177,19 @@ public class AddressBookTest {
         }
         Assertions.assertEquals(7, book.getBookMapSizeOfValues("API").size());
     }
+
+    @Test
+    void givenNewCityForContact_whenUpdateShouldMatch200Response() {
+        AddressBook book = new AddressBook(getContactList());
+        book.updateContactJSONServer("Sachin","Pune");
+        Contact contact = book.getContact("Sachin");
+
+        String empJson = new Gson().toJson(contact);
+        RequestSpecification requestSpecification = RestAssured.given();
+        requestSpecification.header("Content-Type","application/json");
+        requestSpecification.body(empJson);
+        Response response = requestSpecification.put("/Contacts/"+6);
+        int statusCode = response.getStatusCode();
+        Assertions.assertEquals(200,statusCode);
+    }
 }
