@@ -41,3 +41,5 @@
 #### Ability to Add new Contact to the Address Book Database
 ### Use Case:21
 #### Ability to Add Multiple Contacts to the Address Book Database
+### Use Case:22
+#### Ability to Read Entries of Address Book from JSONServer

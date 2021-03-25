@@ -1,11 +1,15 @@
 package javapractice;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.sql.SQLException;
+import java.lang.reflect.Type;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -15,6 +19,7 @@ public class AddressBookTest {
     AddressBook addressBook;
     public Map<String, ArrayList<Contact>> book = new HashMap<>();
     ArrayList<Contact> bookList = new ArrayList<>();
+
     @BeforeEach
     public void testEntries() {
         Contact contact = new Contact("Sachin","Tendulkar","Appartments",
@@ -26,6 +31,23 @@ public class AddressBookTest {
         book.put("Test", bookList);
         addressBook = new AddressBook(book);
     }
+
+    @BeforeEach
+    public void setUp() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = 3000;
+    }
+
+    public Map<String, ArrayList<Contact>> getContactList() {
+        Type REVIEW_TYPE = new TypeToken<List<Contact>>() {}.getType();
+        Response response = RestAssured.get("/Contacts");
+        System.out.println("Contact Entries In JSONServer:\n" + response.asString());
+        List<Contact> listOfContacts = new Gson().fromJson(response.asString(), REVIEW_TYPE);
+        Map<String, ArrayList<Contact>> bookAPI = new HashMap<>();
+        bookAPI.put("API", (ArrayList<Contact>) listOfContacts);
+        return bookAPI;
+    }
+
     @Test
     public void givenContact_shouldBeCreated_checkAssertionWithResult() {
         Contact contact = new Contact("Sachin","Tendulkar","Appartments",
@@ -120,5 +142,11 @@ public class AddressBookTest {
         Instant end = Instant.now();
         System.out.println("Duration with thread  " + Duration.between(start, end));
         Assertions.assertEquals(6, addressBook.getBookMapSizeOfValues("DB").size());
+    }
+
+    @Test
+    public void givenContactsInJSONServer_WhenRetrieved_ShouldMatchTheCount() {
+        AddressBook book = new AddressBook(getContactList());
+        Assertions.assertEquals(5, book.getBookMapSizeOfValues("API").size());
     }
 }

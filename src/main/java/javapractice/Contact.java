@@ -8,24 +8,31 @@ import java.util.Objects;
 public class Contact {
 
     @CsvBindByName(column = "firstName", required = true)
-    public String firstName;
+    private String firstName;
     @CsvBindByName(column = "lastName", required = true)
-    public String lastName;
+    private String lastName;
     @CsvBindByName(column = "address")
-    public String address;
+    private String address;
     @CsvBindByName(column = "city")
-    public String city;
+    private String city;
     @CsvBindByName(column = "state")
-    public String state;
+    private String state;
     @CsvBindByName(column = "zip")
-    public String zip;
+    private String zip;
     @CsvBindByName(column = "phone")
-    public String phoneNumber;
+    private String phoneNumber;
     @CsvBindByName(column = "email")
-    public String email;
-    public LocalDate date;
+    private String email;
+    private LocalDate date;
+    private int id;
 
     public Contact() {}
+
+    public Contact(int id, String firstName, String lastName, String address, String city,
+                   String state, String zip, String phone, String email, LocalDate date) {
+        this(firstName, lastName, address, city, state, zip, phone, email, date);
+        this.id = id;
+    }
 
     public Contact(String firstName, String lastName, String address, String city,
                    String state, String zip, String phone, String email, LocalDate date) {
