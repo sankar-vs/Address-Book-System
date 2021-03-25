@@ -8,22 +8,22 @@ import java.util.Objects;
 public class Contact {
 
     @CsvBindByName(column = "firstName", required = true)
-    private String firstName;
+    public String firstName;
     @CsvBindByName(column = "lastName", required = true)
-    private String lastName;
+    public String lastName;
     @CsvBindByName(column = "address")
-    private String address;
+    public String address;
     @CsvBindByName(column = "city")
-    private String city;
+    public String city;
     @CsvBindByName(column = "state")
-    private String state;
+    public String state;
     @CsvBindByName(column = "zip")
-    private String zip;
+    public String zip;
     @CsvBindByName(column = "phone")
-    private String phoneNumber;
+    public String phoneNumber;
     @CsvBindByName(column = "email")
-    private String email;
-    private LocalDate date;
+    public String email;
+    public LocalDate date;
 
     public Contact() {}
 
@@ -83,6 +83,10 @@ public class Contact {
         return email;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -120,7 +124,15 @@ public class Contact {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
-        return Objects.equals(firstName, contact.firstName) && Objects.equals(lastName, contact.lastName) && Objects.equals(address, contact.address) && Objects.equals(city, contact.city) && Objects.equals(state, contact.state) && Objects.equals(zip, contact.zip) && Objects.equals(phoneNumber, contact.phoneNumber) && Objects.equals(email, contact.email);
+        return Objects.equals(firstName, contact.firstName) && Objects.equals(lastName, contact.lastName)
+                && Objects.equals(address, contact.address) && Objects.equals(city, contact.city)
+                && Objects.equals(state, contact.state) && Objects.equals(zip, contact.zip)
+                && Objects.equals(phoneNumber, contact.phoneNumber) && Objects.equals(email, contact.email)
+                && Objects.equals(date, contact.date);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, address, city, state, zip, phoneNumber, email, date);
+    }
 }

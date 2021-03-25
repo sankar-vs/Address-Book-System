@@ -269,7 +269,8 @@ public class AddressBook {
     }
     //Reads and Writes data from a DATABASE
     public void databaseConnectivity() {
-        bookMap.put("DB", (ArrayList<Contact>) new JDBC().readData());
+        ArrayList<Contact> contactList = (ArrayList<Contact>) new JDBC().readData();
+        bookMap.put("DB", contactList);
     }
     //Reads and Writes data from a DATABASE
     public void updateDatabase(String type, String name, String value) {
@@ -291,7 +292,8 @@ public class AddressBook {
     }
 
     public boolean checkSyncWithDB(String name) {
-        List<Contact> contactList = new JDBC().getDBfirstName(name);
+        databaseConnectivity();
+        ArrayList<Contact> contactList = (ArrayList<Contact>) new JDBC().getDBfirstName(name);
         return contactList.get(0).equals(getContact(name));
     }
 
@@ -301,10 +303,41 @@ public class AddressBook {
                 .findFirst().orElse(null);
     }
 
-    public void addcontactToDB(String firstName, String lastName, String address, String city, String state, String zip, String phone, String email, LocalDate date) {
+    public void addContactToDB(String firstName, String lastName, String address, String city, String state, String zip, String phone, String email, LocalDate date) {
         databaseConnectivity();
         ArrayList<Contact> contactList = bookMap.get("DB");
         contactList.add(new JDBC().addContact(firstName, lastName, address, city, state, zip, phone, email, date));
         bookMap.put("DB", contactList);
+    }
+
+    public void addContactWithThreads(List<Contact> contactListData) {
+        databaseConnectivity();
+        ArrayList<Contact> contactList = bookMap.get("DB");
+        Map<Integer,Boolean> contactStatus = new HashMap<>();
+        for (Contact x : contactListData) {
+            Runnable runnable = () ->{
+                contactStatus.put(x.hashCode(),false);
+                System.out.println("Employee Being Added : " + Thread.currentThread().getName());
+                new JDBC().addContact(x.getFirstName(), x.getLastName(), x.getAddress(), x.getCity(), x.getState(),
+                        x.getZip(), x.getPhoneNumber(), x.getEmail(), x.getDate());
+                contactStatus.put(x.hashCode(),true);
+                System.out.println("Employee Being Added : " + Thread.currentThread().getName());
+            };
+            Thread thread = new Thread(runnable, x.getFirstName());
+            thread.start();
+            contactList.add(x);
+            bookMap.put("DB", contactList);
+        }
+        while (contactStatus.containsValue(false)){
+            try{Thread.sleep(10);
+            }catch  (InterruptedException e){ e.printStackTrace();}
+        }
+    }
+
+    public void addContactWithoutThreads(List<Contact> contactListData) {
+        for (Contact x : contactListData) {
+            addContactToDB(x.getFirstName(), x.getLastName(), x.getAddress(), x.getCity(), x.getState(),
+                    x.getZip(), x.getPhoneNumber(), x.getEmail(), x.getDate());
+        }
     }
 }

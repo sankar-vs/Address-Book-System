@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AddressBookTest {
     AddressBook addressBook;
@@ -57,7 +56,7 @@ public class AddressBookTest {
     public void givenContactsInDB_WhenRetrieved_ShouldMatchEmployeeCount() {
         AddressBook addressBook = new AddressBook();
         addressBook.databaseConnectivity();
-        Assertions.assertEquals(4, addressBook.getBookMapSizeOfValues("DB").size());
+        Assertions.assertEquals(5, addressBook.getBookMapSizeOfValues("DB").size());
     }
 
     @Test
@@ -83,11 +82,43 @@ public class AddressBookTest {
     }
 
     @Test
-    void givenNewContactToDB_whenAdded_shouldSyncWithDB () throws SQLException {
+    void givenNewContactToDB_whenAdded_shouldSyncWithDB () {
         AddressBook addressBook = new AddressBook();
-        addressBook.addcontactToDB("Sachin","Tendulkar","Appartments",
+        addressBook.addContactToDB("Sachin","Tendulkar","Appartments",
                 "Mumbai","MH","123456","1234567890","test1.100@gmail.com", LocalDate.now());
         boolean result = addressBook.checkSyncWithDB("Sachin");
         Assertions.assertTrue(result);
+    }
+
+    @Test
+    void givenNewContactToAddressBookDB_whenAdded_shouldMatchWithEntriesWithoutUsingThread () {
+        Contact[] contactArray = {
+                new Contact("Sachin", "Tendulkar", "Appartments",
+                        "Mumbai", "MH", "123456", "1234567890", "test1.100@gmail.com", LocalDate.now()),
+                new Contact("Sharon", "John", "Samrudhi Appartments",
+                        "Coimbatore", "TN", "560038", "7894561230", "test2.100@gmail.com", LocalDate.now())
+        };
+        AddressBook addressBook = new AddressBook();
+        Instant start = Instant.now();
+        addressBook.addContactWithoutThreads(Arrays.asList(contactArray));
+        Instant end = Instant.now();
+        System.out.println("Duration with thread  " + Duration.between(start, end));
+        Assertions.assertEquals(6, addressBook.getBookMapSizeOfValues("DB").size());
+    }
+
+    @Test
+    void givenNewContactToAddressBookDB_whenAdded_shouldMatchWithEntriesUsingThread () {
+        Contact[] contactArray = {
+                new Contact("Sachin", "Tendulkar", "Appartments",
+                        "Mumbai", "MH", "123456", "1234567890", "test1.100@gmail.com", LocalDate.now()),
+                new Contact("Sharon", "John", "Samrudhi Appartments",
+                        "Coimbatore", "TN", "560038", "7894561230", "test2.100@gmail.com", LocalDate.now())
+        };
+        AddressBook addressBook = new AddressBook();
+        Instant start = Instant.now();
+        addressBook.addContactWithThreads(Arrays.asList(contactArray));
+        Instant end = Instant.now();
+        System.out.println("Duration with thread  " + Duration.between(start, end));
+        Assertions.assertEquals(6, addressBook.getBookMapSizeOfValues("DB").size());
     }
 }

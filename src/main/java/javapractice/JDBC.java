@@ -102,16 +102,52 @@ public class JDBC {
     }
 
     public Contact addContact(String firstName, String lastName, String address, String city, String state, String zip, String phone, String email, LocalDate date) {
+        Connection connection = null;
+        Contact contact = null;
+        try {
+            connection = this.getConnection();
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String sql = String.format("INSERT INTO contacts (firstName, lastName, address, city, state, zip, phone, email, date) value \n" +
                 "('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');", firstName, lastName, address, city, state, zip, phone, email, date);
-        Contact contact = null;
-        try (Connection connection = this.getConnection()){
-            Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement()){
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        try (Statement statement = connection.createStatement()) {
+            sql = String.format("INSERT INTO address_book (book_name, contact_firstName) value ('%s', '%s');", "DB", firstName);
             int rowAffected = statement.executeUpdate(sql);
             if (rowAffected == 1)
                 contact = new Contact(firstName, lastName, address, city, state, zip, phone, email, date);
+
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
         }
         return contact;
     }
